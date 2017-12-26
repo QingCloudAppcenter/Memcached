@@ -1,0 +1,7 @@
+[template]
+src = "memcached.conf.tmpl"
+dest = "/opt/memcached/memcached.conf"
+keys = [
+  "/",
+]
+reload_cmd = "cp /opt/memcached/memcached.conf /etc/memcached.conf; service memcached restart"

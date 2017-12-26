@@ -1,0 +1,158 @@
+{
+    "type": "array",
+    "properties": [{
+        "key": "cluster",
+        "description": "Memcached release 1.4.25 properties",
+        "type": "array",
+        "properties": [{
+            "key": "name",
+            "label": "Name",
+            "description": "The name of the Memcached service",
+            "type": "string",
+            "default": "Memcached",
+            "required": "no"
+        }, {
+            "key": "description",
+            "label": "Description",
+            "description": "The description of the Memcached service",
+            "type": "string",
+            "default": "",
+            "required": "no"
+        }, {
+            "key": "vxnet",
+            "label": "VxNet",
+            "description": "Choose a vxnet to join",
+            "type": "string",
+            "default": "",
+            "required": "yes"
+        }, {
+            "key": "memcached_node",
+            "label": "Memcached Node",
+            "description": "The description of the Memcached Node",
+            "type": "array",
+            "properties": [{
+                "key": "cpu",
+                "label": "CPU",
+                "description": "CPUs of each node",
+                "type": "integer",
+                "default": 1,
+                "range": [
+                    1,
+                    2,
+                    4,
+                    8
+                ],
+                "required": "yes"
+            }, {
+                "key": "memory",
+                "label": "Memory",
+                "description": "memory of each node (in MiB)",
+                "type": "integer",
+                "default": 1024,
+                "range": [
+                    1024,
+                    2048,
+                    4096,
+                    8192,
+                    16384,
+                    32768,
+                    65536
+                ],
+                "required": "yes"
+            }, {
+                "key": "instance_class",
+                "label": "Instance Class",
+                "description": "The instance type for the cluster to run，such as high performance，high performance plus",
+                "type": "integer",
+                "default": 0,
+                "range": [0, 1],
+                "required": "yes"
+            }, {
+                "key": "count",
+                "label": "Node Count",
+                "description": "Number of nodes for the cluster to create",
+                "type": "integer",
+                "default": 1,
+                "max": 100,
+                "min": 1,
+                "required": "yes"
+            }]
+        }]
+    }, {
+        "key": "env",
+        "description": "Memcached service properties",
+        "type": "array",
+        "properties": [{
+            "key": "-p",
+            "label": "tcp_port",
+            "description": "TCP port number to listen on",
+            "type": "integer",
+            "default": 11211,
+            "max": 65535,
+            "min": 1024,
+            "required": "no"
+        }, {
+            "key": "-U",
+            "label": "udp_port",
+            "description": "UDP port number to listen on",
+            "type": "integer",
+            "default": 11211,
+            "max": 65535,
+            "min": 1024,
+            "required": "no"
+        }, {
+            "key": "-c",
+            "label": "max_simultaneous_connections",
+            "description": "max simultaneous connections",
+            "type": "integer",
+            "default": 65000,
+            "max": 65000,
+            "min": 1,
+            "required": "no"
+        }, {
+            "key": "-m",
+            "label": "max_memory",
+            "description": "max memory to use for items in megabytes",
+            "type": "integer",
+            "default": 716,
+            "max": 65535,
+            "min": 1,
+            "required": "no"
+        }, {
+            "key": "-n",
+            "label": "chunk_size",
+            "description": "minimum space allocated for key+value+flags",
+            "type": "integer",
+            "default": 48,
+            "max": 1024,
+            "min": 1,
+            "required": "no"
+        }, {
+            "key": "-f",
+            "label": "chunk_size_growth_factor",
+            "description": "chunk size growth factor",
+            "type": "number",
+            "default": 1.25,
+            "max": 100.00,
+            "min": 1.01,
+            "required": "no"
+        }, {
+            "key": "-t",
+            "label": "threads",
+            "description": "number of threads to use",
+            "type": "integer",
+            "default": 1,
+            "max": 256,
+            "min": 1,
+            "required": "no"
+        }, {
+            "key": "-M",
+            "label": "return_error",
+            "description": "return error on memory exhausted (rather than removing items)",
+            "type": "integer",
+            "default": 0,
+            "range": [0,1],
+            "required": "no"
+        }]
+    }]
+}

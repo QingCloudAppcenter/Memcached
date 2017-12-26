@@ -1,0 +1,153 @@
+{
+    "name": {{cluster.name}},
+    "description": {{cluster.description}},
+    "vxnet": {{cluster.vxnet}},
+    "nodes": [{
+        "container": {
+            "type": "kvm",
+            "zone": "sh1a",
+            "image": "img-wb8ffshe"
+        },
+        "count": {{cluster.memcached_node.count}},
+        "cpu": {{cluster.memcached_node.cpu}},
+        "memory": {{cluster.memcached_node.memory}},
+        "instance_class": {{cluster.memcached_node.instance_class}},
+        "services": {
+            "start": {
+                "cmd": "service memcached start"
+            },
+            "stop": {
+                "cmd": "service memcached stop"
+            },
+            "restart": {
+                "cmd": "service memcached restart"
+            }
+        }
+    }],
+    "advanced_actions": ["change_vxnet", "scale_horizontal"],
+    "env": {
+        "-p": {{env.-p}},
+        "-U": {{env.-U}},
+        "-c": {{env.-c}},
+        "-m": {{env.-m}},
+        "-n": {{env.-n}},
+        "-f": {{env.-f}},
+        "-t": {{env.-t}},
+        "-M": {{env.-M}}
+    },
+    "health_check": {
+        "enable": true,
+        "interval_sec": 60,
+        "timeout_sec": 10,
+        "action_timeout_sec": 30,
+        "healthy_threshold": 2,
+        "unhealthy_threshold": 3,
+        "check_cmd": "python3 /opt/memcached/health-check.py",
+        "action_cmd": "service memcached restart"
+    },
+    "monitor": {
+        "enable" : true,
+        "cmd" : "python3 /opt/memcached/monitor.py",
+        "items" : {
+            "get_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "set_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "delete_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "incr_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "decr_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "touch_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "cas_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "flush_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "hit_rate" : {
+                "unit" : "%",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 0.01
+            },
+            "get_hits" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "get_misses" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "evictions_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "reclaimed_count" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "cur_connections" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            },
+            "total_connections" : {
+                "unit" : "Times",
+                "value_type" : "int",
+                "statistics_type" : "latest",
+                "scale_factor_when_display" : 1
+            }
+        },
+        "groups" : {
+            "operations" : ["get_count", "set_count", "delete_count", "incr_count"],
+            "operations2" : ["decr_count", "touch_count", "cas_count", "flush_count"],
+            "hits_and_misses" : ["get_hits", "get_misses"],
+            "key_count" : ["evictions_count", "reclaimed_count"],
+            "connections" : ["cur_connections"]
+        },
+        "display" : ["operations", "operations2", "hit_rate", "hits_and_misses", "key_count", "connections"],
+        "alarm" : ["evictions_count"]
+    }
+}

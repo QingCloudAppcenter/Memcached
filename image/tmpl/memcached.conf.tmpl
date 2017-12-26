@@ -1,0 +1,20 @@
+-d
+
+logfile /var/log/memcached.log
+
+-l 0.0.0.0
+
+-u memcache
+
+-p {{getv "/env/-p"}}
+-U {{getv "/env/-U"}}
+-c {{getv "/env/-c"}}
+-m {{getv "/env/-m"}}
+-f {{getv "/env/-f"}}
+-n {{getv "/env/-n"}}
+-t {{getv "/env/-t"}}
+
+{{$M := getv "/env/-M"}}
+{{if eq $M 1}}
+-M
+{{end}}
